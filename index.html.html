@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoDaddy Finance Teams - Detailed GBU Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Navigation */
+        .nav-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #059669, #047857);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .nav-header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            background: linear-gradient(135deg, #064e3b, #047857);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: linear-gradient(135deg, #059669, #10b981);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-content {
+            padding: 30px;
+        }
+
+        .team-header {
+            background: linear-gradient(135deg, #047857, #064e3b);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.6; }
+        }
+
+        .team-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .metric-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 6px solid;
+        }
+
+        .section.good {
+            background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(255,255,255,0.95));
+            border-left-color: #22c55e;
+        }
+
+        .section.bad {
+            background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(255,255,255,0.95));
+            border-left-color: #fbbf24;
+        }
+
+        .section.ugly {
+            background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(255,255,255,0.95));
+            border-left-color: #ef4444;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1f2937;
+        }
+
+        .impact-subsection {
+            margin-bottom: 25px;
+        }
+
+        .impact-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .impact-title.high {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .impact-title.medium {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .impact-title.small {
+            background: linear-gradient(135deg, #6ee7b7, #34d399);
+        }
+
+        /* Item Cards */
+        .item-card {
+            background: #f8fafc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .item-card.high-impact {
+            border-left-color: #047857;
+            background: linear-gradient(135deg, #f0fdf4, #f8fafc);
+        }
+
+        .item-card.medium-impact {
+            border-left-color: #059669;
+            background: linear-gradient(135deg, #ecfdf5, #f8fafc);
+        }
+
+        .item-card.small-impact {
+            border-left-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4, #f8fafc);
+        }
+
+        .item-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1f2937;
+            font-size: 1.05em;
+            line-height: 1.4;
+        }
+
+        .item-details {
+            font-size: 0.9em;
+            color: #4b5563;
+            margin-bottom: 8px;
+        }
+
+        .contributors-section {
+            background: rgba(5, 150, 105, 0.08);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border-left: 3px solid #059669;
+        }
+
+        .contributors-label {
+            font-weight: 700;
+            color: #047857;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .contributors-list {
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        .theme-tag {
+            display: inline-block;
+            background: #e5e7eb;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            color: #374151;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .theme-tag.showcase { background: #ecfdf5; color: #065f46; }
+        .theme-tag.hours-saved { background: #f0fdf4; color: #166534; }
+        .theme-tag.process-improvement { background: #f0f9ff; color: #0c4a6e; }
+        .theme-tag.cost-savings { background: #fef3c7; color: #92400e; }
+
+        /* Overview specific styles */
+        .overview-content {
+            padding: 30px;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #1e40af;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e40af, #1a365d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: #4b5563;
+            font-weight: 600;
+        }
+
+        .teams-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .team-summary-card {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid #22c55e;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .team-name {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .team-metrics-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+
+        .metric-summary {
+            text-align: center;
+        }
+
+        .metric-number-summary {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .metric-number-summary.good { color: #22c55e; }
+        .metric-number-summary.bad { color: #fbbf24; }
+        .metric-number-summary.ugly { color: #ef4444; }
+
+        .metric-label-summary {
+            font-size: 0.85em;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .impact-breakdown {
+            background: rgba(5, 150, 105, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.85em;
+            color: #374151;
+        }
+
+        .top-contributors {
+            background: rgba(34, 197, 94, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .contributors-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .contributor-item {
+            margin-bottom: 6px;
+            font-size: 0.85em;
+            color: #374151;
+        }
+
+        .assessment-note {
+            background: rgba(5, 150, 105, 0.1);
+            border: 1px solid #059669;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #065f46;
+        }
+
+        .assessment-note strong {
+            color: #064e3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Header -->
+        <div class="nav-header">
+            <h1>🏢 GoDaddy Finance Teams</h1>
+            <p>Detailed GBU Dashboard - July 2025</p>
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('overview')">📊 Executive Summary</button>
+                <button class="nav-tab" onclick="showSection('finance-innovation')">🚀 Finance Innovation</button>
+                <button class="nav-tab" onclick="showSection('revenue')">💰 Revenue</button>
+                <button class="nav-tab" onclick="showSection('close-to-report')">📈 Close to Report</button>
+                <button class="nav-tab" onclick="showSection('direct-tax')">🏛️ Direct Tax</button>
+                <button class="nav-tab" onclick="showSection('indirect-tax')">🌐 Indirect Tax</button>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="content-section active">
+            <div class="overview-content">
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">31</div>
+                        <div class="stat-label">Total Good Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Total Bad Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">11</div>
+                        <div class="stat-label">Total Ugly Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">High Impact Items</div>
+                    </div>
+                </div>
+
+                <div class="teams-summary">
+                    <div class="team-summary-card" onclick="showSection('finance-innovation')">
+                        <div class="team-name">🚀 Finance Innovation</div>
+                        <div class="team-metrics-summary">
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">22</div>
+                                <div class="metric-label-summary">Good</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary bad">2</div>
+                                <div class="metric-label-summary">Bad</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary ugly">2</div>
+                                <div class="metric-label-summary">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="impact-breakdown">
+                            <strong>Impact Analysis:</strong> 9 High, 12 Medium, 1 Small impact items
+                        </div>
+                        <div class="top-contributors">
+                            <div class="contributors-title">Top Contributors:</div>
+                            <div class="contributor-item">• Anuj Kumar (8 high-impact items)</div>
+                            <div class="contributor-item">• Shara A, Anna Turner, Teja Gunda (multiple items)</div>
+                            <div class="contributor-item">• Gayatri Krishnakumar (AI strategy leadership)</div>
+                        </div>
+
+                    </div>
+
+                    <div class="team-summary-card" onclick="showSection('revenue')">
+                        <div class="team-name">💰 Revenue</div>
+                        <div class="team-metrics-summary">
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">1</div>
+                                <div class="metric-label-summary">Good</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary bad">1</div>
+                                <div class="metric-label-summary">Bad</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">0</div>
+                                <div class="metric-label-summary">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="impact-breakdown">
+                            <strong>Impact Analysis:</strong> 1 High impact achievement (2025 OKR)
+                        </div>
+                        <div class="top-contributors">
+                            <div class="contributors-title">Contributors:</div>
+                            <div class="contributor-item">• Melissa Bremmer, Curtis Jacobs</div>
+                            <div class="contributor-item">• Vivienne Su, Amanda Vigil</div>
+                            <div class="contributor-item">• Rachel Bruehlman (process improvements)</div>
+                        </div>
+                    </div>
+
+                    <div class="team-summary-card" onclick="showSection('close-to-report')">
+                        <div class="team-name">📈 Close to Report</div>
+                        <div class="team-metrics-summary">
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">4</div>
+                                <div class="metric-label-summary">Good</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary bad">3</div>
+                                <div class="metric-label-summary">Bad</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary ugly">1</div>
+                                <div class="metric-label-summary">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="impact-breakdown">
+                            <strong>Impact Analysis:</strong> 2 High, 2 Medium impact items
+                        </div>
+                        <div class="top-contributors">
+                            <div class="contributors-title">Top Contributors:</div>
+                            <div class="contributor-item">• Chris Sanders (AI statutory financials)</div>
+                            <div class="contributor-item">• Jessa Mully, Charlie Spritzer (EIB automation)</div>
+                            <div class="contributor-item">• Rachel Bruehlman, Hillary Chen (10-Q improvements)</div>
+                        </div>
+                    </div>
+
+                    <div class="team-summary-card" onclick="showSection('direct-tax')">
+                        <div class="team-name">🏛️ Direct Tax</div>
+                        <div class="team-metrics-summary">
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">3</div>
+                                <div class="metric-label-summary">Good</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">0</div>
+                                <div class="metric-label-summary">Bad</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary ugly">4</div>
+                                <div class="metric-label-summary">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="impact-breakdown">
+                            <strong>Impact Analysis:</strong> 2 High, 1 Medium impact items
+                        </div>
+                        <div class="top-contributors">
+                            <div class="contributors-title">Top Contributors:</div>
+                            <div class="contributor-item">• Shradha Khandelwal, Jennifer Decker ($9M victory)</div>
+                            <div class="contributor-item">• Sam Smith, Florance Febriyani (ETR modeling)</div>
+                            <div class="contributor-item">• Christina Nordvall (tax controls)</div>
+                        </div>
+                    </div>
+
+                    <div class="team-summary-card" onclick="showSection('indirect-tax')">
+                        <div class="team-name">🌐 Indirect Tax</div>
+                        <div class="team-metrics-summary">
+                            <div class="metric-summary">
+                                <div class="metric-number-summary good">1</div>
+                                <div class="metric-label-summary">Good</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary bad">1</div>
+                                <div class="metric-label-summary">Bad</div>
+                            </div>
+                            <div class="metric-summary">
+                                <div class="metric-number-summary ugly">3</div>
+                                <div class="metric-label-summary">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="impact-breakdown">
+                            <strong>Impact Analysis:</strong> 1 Medium impact item
+                        </div>
+                        <div class="top-contributors">
+                            <div class="contributors-title">Top Contributors:</div>
+                            <div class="contributor-item">• Catherine Hodges, Katy Kendall (Anybill contract)</div>
+                            <div class="contributor-item">• David Valenzuela (Colombia VAT issues)</div>
+                            <div class="contributor-item">• Ryan Gist (Brazil tax negotiations)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance Innovation Detailed Report -->
+        <div id="finance-innovation" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">🚀 Finance Innovation</h2>
+                    <div class="team-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">22</div>
+                            <div class="metric-label">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">2</div>
+                            <div class="metric-label">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">2</div>
+                            <div class="metric-label">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (22 Items)</span>
+                    </div>
+                    
+                    <div class="impact-subsection">
+                        <div class="impact-title high">HIGH IMPACT (9 Items)</div>
+                        
+                        <div class="item-card high-impact">
+                            <div class="item-title">Service Account Migration</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Keerthy Cittineni, Lety Enriquez</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Other</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">Poynt–Payfac: Data Pipeline Change Live in Production</div>
+                            <div class="item-details">Sourcing from S3 and delivering to Teradata. This update restores previously lost data and delivers significant time savings for the team.</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Vinayak Pandey, Solonia Bass</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">FDM Renewals Launched (8/1)</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Shara A, Anuj K</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">FDM to Teradata ETL Dashboard (Python & Streamlit)</div>
+                            <div class="item-details">Built using GDY AI tools for monitoring jobs and analyzing run times on daily/monthly basis.</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anu Kumar</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">R360 Process Updated for Additional Finance Data</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anuj Kumar</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">OTF Fix Applied to Teradata</div>
+                            <div class="item-details">Enhanced ETL Capabilities within Teradata</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anuj Kumar, Shara A</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">Global Dim Product Updates</div>
+                            <div class="item-details">Enable FDM and all its Associated Reporting</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anuj Kumar</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">FDM to Teradata ETL Pipeline (TD OTF)</div>
+                            <div class="item-details">Saved Engineering Hours and enabled quick turnaround on data movement</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anuj Kumar</div>
+                            </div>
+                            <div class="theme-tag cost-savings">Cost Savings</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">FDM Core Bookings 7/1 Delivery</div>
+                            <div class="item-details">Achieved on-time delivery</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Shara A, Anuj K</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-subsection">
+                        <div class="impact-title medium">MEDIUM IMPACT (12 Items)</div>
+                        
+                        <div class="item-card medium-impact">
+                            <div class="item-title">AI Agents Development (3 Agents in 2 weeks)</div>
+                            <div class="item-details">Worked closely with Interns on Payroll, Contingent Worker and Equity agents prior to FLT</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Rose Santos, Khoa Pham, Gayatri Krishnakumar</div>
+                            </div>
+                            <div class="theme-tag showcase">Showcase</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">AI Strategy Finalization</div>
+                            <div class="item-details">Finalized AI Strategy and Proposed plan for FLT</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Gayatri Krishnakumar</div>
+                            </div>
+                            <div class="theme-tag">Other</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Customer Credit Monitoring Agent PoC</div>
+                            <div class="item-details">Integrating Ecomm, Workday Financials, UiPath, Slack, and Copilot for automated alerts and insights</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Andrew Predun, Mano Krishnan, Gayatri Krishnakumar</div>
+                            </div>
+                            <div class="theme-tag showcase">Showcase</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Banking Requirements Advisor Agent</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Jennifer Roy</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Journal Loading Automation</div>
+                            <div class="item-details">Collaborated with dev-workday to deploy automation for loading journals with attachments. Adopted by all accountants for month-end journals</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Kate Vu, Charlie Spitzer</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Care Touchless Close - Full Implementation</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anna Turner, Care, ABTL</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+                        
+                        <!-- Additional Medium Impact Items -->
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Weight Average Reports Dashboard</div>
+                            <div class="item-details">Dashboard for Procurement and Custom Report for Treasury</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Andrew Predun, Kate Vu</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">OfficeConnect Training</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Teja Gunda</div>
+                            </div>
+                            <div class="theme-tag showcase">Showcase</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">GoCAAS Companion with Jira Bot</div>
+                            <div class="item-details">Slack enabled companion with Jira bot enabling immediate ticket submission from channel</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anna Turner, Teja Gunda</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Cursor AI for Airflow Migration</div>
+                            <div class="item-details">Leveraging Cursor AI to optimize Big Data developer jobs migration into Airflow</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anuj Agarwal</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Alteryx to QuickSight PoC</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Keerthy Cittineni</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">First Call with Explore Cell DPG</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Anna Turner, Teja Gunda</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-subsection">
+                        <div class="impact-title small">SMALL IMPACT (1 Item)</div>
+                        
+                        <div class="item-card small-impact">
+                            <div class="item-title">EIB for Bulk Ad Hoc Bank Transactions</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Jennifer Roy, Pavan Cheryala</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (2 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Tableau to QuickSight Migration Risk</div>
+                        <div class="item-details">Timeline compression from 12/31 to 9/30 requiring urgent Forge coordination</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Shara Apte, Solonia Bass</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Escalated to forge leadership</div>
+                        <div class="theme-tag">Resourcing</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">ETL Failure - GDR/BSA/SLB</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Shara Apte, Anuj K</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Enhance Job Monitoring & Support</div>
+                        <div class="theme-tag">Resourcing</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>🚨</span>
+                        <span>THE UGLY (2 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Swift Implementation Delays</div>
+                        <div class="item-details">Blocking downstream Treasury initiatives (TMS Phase 2, Global Cash Pooling, Intercompany), creating cascading risks</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Chloe Matthews</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Prioritize Swift, pull in architect from CorpTech and FinTech</div>
+                        <div class="theme-tag">Needs Escalation</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">Missing PF_IDS Process</div>
+                        <div class="item-details">Need to uncover process and identify data source owner</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Anuj Kumar</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Proper Documentation for Jobs needed</div>
+                        <div class="theme-tag">Other Business Impact</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Team Report -->
+        <div id="revenue" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">💰 Revenue Team</h2>
+                    <div class="team-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">1</div>
+                            <div class="metric-label">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">1</div>
+                            <div class="metric-label">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">0</div>
+                            <div class="metric-label">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🎯</span>
+                        <span>THE GOOD (1 Item)</span>
+                    </div>
+                    
+                    <div class="impact-subsection">
+                        <div class="impact-title high">HIGH IMPACT (1 Item)</div>
+                        
+                        <div class="item-card high-impact">
+                            <div class="item-title">Record-Breaking "Pre-pre" Revenue Close</div>
+                            <div class="item-details">Completed in just three days, including Aftermarket integration - achieving 2025 OKR ahead of schedule</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Melissa Bremmer, Curtis Jacobs, Vivienne Su, Amanda Vigil</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Manual Error in Constant Currency File</div>
+                        <div class="item-details">Q1 error not detected timely, resulting in Q1 press release correction</div>
+                        <div class="item-details"><strong>Root Cause:</strong> 1. File lacked SOP 2. SMEs not involved in press release review</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Curtis Jacobs, Rachel Bruehlman</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Continue O2C SOP project, involve SMEs in press release review, implement early escalation</div>
+                        <div class="theme-tag">Process Clarity</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>✅</span>
+                        <span>THE UGLY</span>
+                    </div>
+                    <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border-radius: 15px;">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3 style="font-size: 2em; margin: 10px 0;">No Ugly Items!</h3>
+                        <p>Excellent performance with zero critical issues this month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Close to Report Team Report -->
+        <div id="close-to-report" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">📈 Close to Report</h2>
+                    <div class="team-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">4</div>
+                            <div class="metric-label">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">3</div>
+                            <div class="metric-label">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">1</div>
+                            <div class="metric-label">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (4 Items)</span>
+                    </div>
+                    
+                    <div class="impact-subsection">
+                        <div class="impact-title high">HIGH IMPACT (2 Items)</div>
+                        
+                        <div class="item-card high-impact">
+                            <div class="item-title">AI-Powered Statutory Financials</div>
+                            <div class="item-details">Automated workflow for small entities replacing manual Workiva process - statutory financials dynamically updated from input files</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Chris Sanders</div>
+                            </div>
+                            <div class="theme-tag cost-savings">Cost Savings</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">EIB Attachment Automation</div>
+                            <div class="item-details">Eliminated time-consuming manual process for multiple journal entries requiring supporting documentation attachments</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Jessa Mully, Charlie Spritzer</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-subsection">
+                        <div class="impact-title medium">MEDIUM IMPACT (2 Items)</div>
+                        
+                        <div class="item-card medium-impact">
+                            <div class="item-title">10-Q Comments Improvement</div>
+                            <div class="item-details">Fewer comments compared to previous quarters, focused on clarity/wording vs. disclosure additions or tie-out errors</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Rachel Bruehlman, Hillary Chen</div>
+                            </div>
+                            <div class="theme-tag hours-saved">Hours Saved</div>
+                        </div>
+
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Legal Entity JIRA Signature Tool</div>
+                            <div class="item-details">Centralized tool for statutory financial signature requests with clear responsibilities and deadlines</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Chris Sanders</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (3 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Last-minute AC Material Changes</div>
+                        <div class="item-details">Deferred cost and working capital table changes affecting 10-Q preparation timing</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Kaity O'Carroll, Rachel Bruehlman</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Coordinate in advance, create draft mockups for review</div>
+                        <div class="theme-tag">Process Clarity</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">TMS Implementation Partner Issues</div>
+                        <div class="item-details">Vendor disorganization and insufficient documentation causing inefficiencies</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Kaity O'Carroll, Renaldo Misrasi</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Enhanced monitoring of deliverables and timeline</div>
+                        <div class="theme-tag">Resourcing</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">MINTIC Colombia Bank Account Crisis</div>
+                        <div class="item-details">Frozen bank accounts for CMP103 severely impacting vendor payments and payroll, with CMP138 temporarily covering payments</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">R2R - Michele, Fernando | Treasury - Jessica, Greg, Jennie, Kate | Tax - Christina, David V., Catherine/Katy | Legal - PMA</div>
+                        </div>
+                        <div class="theme-tag">Other</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>🚨</span>
+                        <span>THE UGLY (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Microsoft Brazil Payment Crisis</div>
+                        <div class="item-details">Over $1M in rejected payments for 1+ years, registrations shut off due to country origin changes during NCE migration</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Michele Dugan, David Woolf, Ryan Gist, Dom Nelson, Ryan Beal, Katy Kendall</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Working with legal and Microsoft partner management to reissue invoices and restore services</div>
+                        <div class="theme-tag">Immediate Action Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direct Tax Team Report -->
+        <div id="direct-tax" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">🏛️ Direct Tax</h2>
+                    <div class="team-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">3</div>
+                            <div class="metric-label">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">0</div>
+                            <div class="metric-label">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">4</div>
+                            <div class="metric-label">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (3 Items)</span>
+                    </div>
+                    
+                    <div class="impact-subsection">
+                        <div class="impact-title high">HIGH IMPACT (2 Items)</div>
+                        
+                        <div class="item-card high-impact">
+                            <div class="item-title">India High Court Tax Refund Victory - $9M Recovery</div>
+                            <div class="item-details">Filed strategic writ resulting in court order directing tax authorities to resolve $9M tax refund within 8 weeks. Tax authorities issued refund order with payment expected Q3/Q4.</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Shradha Khandelwal, Jennifer Decker</div>
+                            </div>
+                            <div class="theme-tag">Other</div>
+                        </div>
+
+                        <div class="item-card high-impact">
+                            <div class="item-title">Long-Term Cash Tax Model & ETR Forecasting</div>
+                            <div class="item-details">Built robust LT Cash Tax Model using historical models to achieve strategic ETR management and monitor global cash tax liability</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Sam Smith, Florance Febriyani, Christina Nordvall</div>
+                            </div>
+                            <div class="theme-tag">Other</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-subsection">
+                        <div class="impact-title medium">MEDIUM IMPACT (1 Item)</div>
+                        
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Enhanced Tax Controls & Data Validation</div>
+                            <div class="item-details">Refined and optimized tax controls to streamline source data validation to OTP</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Sam Smith, Florance Febriyani, Christina Nordvall</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>✅</span>
+                        <span>THE BAD</span>
+                    </div>
+                    <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border-radius: 15px;">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3 style="font-size: 2em; margin: 10px 0;">No Bad Items!</h3>
+                        <p>Excellent performance with no process issues this month</p>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>🚨</span>
+                        <span>THE UGLY (4 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Monthly Cash Tax Process Streamlining</div>
+                        <div class="item-details">Need to streamline process with teams to reduce prep and review time</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Sam Smith, Florance Febriyani</div>
+                        </div>
+                        <div class="theme-tag">Other Business Impact</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">PwC Outsourcing Project Management</div>
+                        <div class="item-details">Need to develop/optimize project management between PwC and GoDaddy across multiple workstreams</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Sam Smith, Florance Febriyani</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Develop robust PM tracker, leverage PwC Sightline for accountability</div>
+                        <div class="theme-tag">Other Business Impact</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">External Advisor Delivery Delays</div>
+                        <div class="item-details">Continued delays in deliverables from outside advisors straining team resources</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Sam Smith, Florance Febriyani, Christina Nordvall</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Leverage PwC Sightline and process calendars to hold stakeholders accountable</div>
+                        <div class="theme-tag">Other Business Impact</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">Lantirn Legal Entity Setup</div>
+                        <div class="item-details">Need to create separate Lantirn/Re:amaze legal entity in Workday</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Sam Smith, Florance Febriyani, Christina Nordvall</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Work with FDAT and accounting to identify roadblocks and solutions</div>
+                        <div class="theme-tag">Other Business Impact</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indirect Tax Team Report -->
+        <div id="indirect-tax" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">🌐 Indirect Tax</h2>
+                    <div class="team-metrics">
+                        <div class="metric-card">
+                            <div class="metric-number">1</div>
+                            <div class="metric-label">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">1</div>
+                            <div class="metric-label">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-number">3</div>
+                            <div class="metric-label">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (1 Item)</span>
+                    </div>
+                    
+                    <div class="impact-subsection">
+                        <div class="impact-title medium">MEDIUM IMPACT (1 Item)</div>
+                        
+                        <div class="item-card medium-impact">
+                            <div class="item-title">Anybill Contract for Tax Payment Platform</div>
+                            <div class="item-details">Signed contract with third-party platform that streamlines US sales and use tax payments. Canada GST expansion under review</div>
+                            <div class="contributors-section">
+                                <div class="contributors-label">Contributors:</div>
+                                <div class="contributors-list">Catherine Hodges, Katy Kendall</div>
+                            </div>
+                            <div class="theme-tag process-improvement">Process Improvement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Unbudgeted FX Tax Costs</div>
+                        <div class="item-details">Unbudgeted and unforecasted indirect tax costs related to foreign exchange fluctuations</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Christina, Katy, Michele</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Early identification, reconsider expense ownership</div>
+                        <div class="theme-tag">Other</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>🚨</span>
+                        <span>THE UGLY (3 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Colombia VAT Costs from Frozen Bank Account</div>
+                        <div class="item-details">Unforecasted VAT costs due to CMP138's funding of CMP103 (resulting from frozen bank account)</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Jessica Habicht, David Valenzuela, Katy Kendall</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Review alternative funding mechanisms to block VAT leakage through CMP138</div>
+                        <div class="theme-tag">Immediate Action Required</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">Microsoft Brazil Tax Renegotiation</div>
+                        <div class="item-details">Renegotiated contractual terms with MSFT in Brazil to mitigate 14% cash tax cost</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Ryan Gist, Katy Kendall, David Valenzuela</div>
+                        </div>
+                        <div class="theme-tag cost-savings">Cost Savings</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">VAT ID Validation Project Delays</div>
+                        <div class="item-details">Project deprioritized for NES project, pushing B2B sales tax cost resolution to Q1 2026</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Katy Kendall</div>
+                        </div>
+                        <div class="item-details"><strong>Action:</strong> Continue to budget expected VAT costs, need leadership support for prioritization</div>
+                        <div class="theme-tag">Needs Escalation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Add smooth scrolling when switching sections
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Add click handlers for team cards in overview
+        document.querySelectorAll('.team-summary-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
