@@ -289,8 +289,8 @@
         }
 
         .item-card.high-impact {
-            border-left-color: #047857;
-            background: linear-gradient(135deg, #f0fdf4, #f8fafc);
+            border-left-color: #dc2626;
+            background: linear-gradient(135deg, #fef2f2, #f8fafc);
         }
 
         .item-card.medium-impact {
@@ -300,6 +300,7 @@
 
         .item-card.low-impact {
             border-left-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4, #f8fafc);
         }
 
         .item-title {
@@ -348,8 +349,10 @@
 
         .theme-tag.process-improvement { background: #f0f9ff; color: #0c4a6e; }
         .theme-tag.other { background: #fef2f2; color: #991b1b; }
-        .theme-tag.tech-limitations { background: #fef2f2; color: #991b1b; }
-        .theme-tag.needs-escalation { background: #fee2e2; color: #991b1b; }
+        .theme-tag.immediate-action { background: #fecaca; color: #991b1b; }
+        .theme-tag.resourcing { background: #fef3c7; color: #92400e; }
+        .theme-tag.tech-limitations { background: #f3f4f6; color: #374151; }
+        .theme-tag.data-dependencies { background: #ede9fe; color: #5b21b6; }
 
         .no-items {
             text-align: center;
@@ -364,6 +367,13 @@
             font-size: 2em;
             font-weight: 800;
             margin: 10px 0;
+        }
+
+        .entry-date {
+            font-size: 0.8em;
+            color: #6b7280;
+            margin-top: 5px;
+            font-style: italic;
         }
 
         @media (max-width: 768px) {
@@ -395,9 +405,12 @@
             <div class="nav-tabs">
                 <button class="nav-tab active" onclick="showSection('overview')">📊 Executive Summary</button>
                 <button class="nav-tab" onclick="showSection('finance-innovation')">🚀 Finance Innovation</button>
-                <button class="nav-tab" onclick="showSection('revenue')">💰 Revenue</button>
                 <button class="nav-tab" onclick="showSection('direct-tax')">🏛️ Direct Tax</button>
+                <button class="nav-tab" onclick="showSection('indirect-tax')">🌐 Indirect Tax</button>
+                <button class="nav-tab" onclick="showSection('close-to-report')">📈 Close to Report</button>
                 <button class="nav-tab" onclick="showSection('accounts-payable')">💳 Accounts Payable</button>
+                <button class="nav-tab" onclick="showSection('revenue')">💰 Revenue</button>
+                <button class="nav-tab" onclick="showSection('strategic-finance')">📊 Strategic Finance</button>
                 <button class="nav-tab" onclick="showSection('payroll')">💼 Payroll</button>
             </div>
         </div>
@@ -407,20 +420,20 @@
             <div class="overview-content">
                 <div class="overview-stats">
                     <div class="stat-card">
-                        <div class="stat-number">7</div>
+                        <div class="stat-number">12</div>
                         <div class="stat-label">Total Good Items</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">1</div>
+                        <div class="stat-number">7</div>
                         <div class="stat-label">Total Bad Items</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">1</div>
+                        <div class="stat-number">2</div>
                         <div class="stat-label">Total Ugly Items</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">1</div>
-                        <div class="stat-label">High Impact Items</div>
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Teams Reporting</div>
                     </div>
                 </div>
 
@@ -429,7 +442,64 @@
                         <div class="team-name">🚀 Finance Innovation</div>
                         <div class="team-metrics">
                             <div class="metric">
+                                <div class="metric-number good">5</div>
+                                <div class="metric-label">Good</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number bad">2</div>
+                                <div class="metric-label">Bad</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number ugly">1</div>
+                                <div class="metric-label">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="team-summary">Strong automation achievements including QuickSight migration at 95% completion, while managing technical challenges with Banking Requirements Agent and control deficiencies.</div>
+                    </div>
+
+                    <div class="team-card" onclick="showSection('direct-tax')">
+                        <div class="team-name">🏛️ Direct Tax</div>
+                        <div class="team-metrics">
+                            <div class="metric">
                                 <div class="metric-number good">2</div>
+                                <div class="metric-label">Good</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number bad">1</div>
+                                <div class="metric-label">Bad</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="team-summary">Successfully completed 2024 US federal tax returns and IRS examination presentation, while addressing SBC calculation error requiring workbook improvements.</div>
+                    </div>
+
+                    <div class="team-card" onclick="showSection('indirect-tax')">
+                        <div class="team-name">🌐 Indirect Tax</div>
+                        <div class="team-metrics">
+                            <div class="metric">
+                                <div class="metric-number good">2</div>
+                                <div class="metric-label">Good</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number bad">1</div>
+                                <div class="metric-label">Bad</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="team-summary">Major platform transition to DGI completed with enhanced reporting capabilities, while addressing manual process inefficiencies in Workday report extraction.</div>
+                    </div>
+
+                    <div class="team-card" onclick="showSection('close-to-report')">
+                        <div class="team-name">📈 Close to Report</div>
+                        <div class="team-metrics">
+                            <div class="metric">
+                                <div class="metric-number good">1</div>
                                 <div class="metric-label">Good</div>
                             </div>
                             <div class="metric">
@@ -441,11 +511,49 @@
                                 <div class="metric-label">Ugly</div>
                             </div>
                         </div>
-                        <div class="team-summary">SOC Content Control and 2025R2 Uptake achievements balanced by ongoing Swift implementation challenges.</div>
+                        <div class="team-summary">Successful CO contract transition with GL mapping completion, offset by critical statutory audit delays due to unresolved tax treatment issues.</div>
+                    </div>
+
+                    <div class="team-card" onclick="showSection('accounts-payable')">
+                        <div class="team-name">💳 Accounts Payable</div>
+                        <div class="team-metrics">
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Good</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number bad">1</div>
+                                <div class="metric-label">Bad</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="team-summary">Managing bandwidth challenges with Care Vendor Management team coordination affecting SOP sign-off and launch timelines.</div>
                     </div>
 
                     <div class="team-card" onclick="showSection('revenue')">
                         <div class="team-name">💰 Revenue</div>
+                        <div class="team-metrics">
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Good</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number bad">1</div>
+                                <div class="metric-label">Bad</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-number good">0</div>
+                                <div class="metric-label">Ugly</div>
+                            </div>
+                        </div>
+                        <div class="team-summary">Addressing new product classification challenges for TrustedSite requiring enhanced cross-functional alignment in FSLI discussions.</div>
+                    </div>
+
+                    <div class="team-card" onclick="showSection('strategic-finance')">
+                        <div class="team-name">📊 Strategic Finance</div>
                         <div class="team-metrics">
                             <div class="metric">
                                 <div class="metric-number good">1</div>
@@ -460,45 +568,7 @@
                                 <div class="metric-label">Ugly</div>
                             </div>
                         </div>
-                        <div class="team-summary">New product setup improvements while managing manual Workday report extraction challenges.</div>
-                    </div>
-
-                    <div class="team-card" onclick="showSection('direct-tax')">
-                        <div class="team-name">🏛️ Direct Tax</div>
-                        <div class="team-metrics">
-                            <div class="metric">
-                                <div class="metric-number good">1</div>
-                                <div class="metric-label">Good</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-number good">0</div>
-                                <div class="metric-label">Bad</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-number good">0</div>
-                                <div class="metric-label">Ugly</div>
-                            </div>
-                        </div>
-                        <div class="team-summary">Excellent progress on external advisor deliverables with strong team collaboration.</div>
-                    </div>
-
-                    <div class="team-card" onclick="showSection('accounts-payable')">
-                        <div class="team-name">💳 Accounts Payable</div>
-                        <div class="team-metrics">
-                            <div class="metric">
-                                <div class="metric-number good">2</div>
-                                <div class="metric-label">Good</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-number good">0</div>
-                                <div class="metric-label">Bad</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-number good">0</div>
-                                <div class="metric-label">Ugly</div>
-                            </div>
-                        </div>
-                        <div class="team-summary">Outstanding performance with Navan travel system launch and SOC Development completion.</div>
+                        <div class="team-summary">Successfully implemented App Store customer counting improvements, while addressing QuickSight migration folder structure challenges.</div>
                     </div>
 
                     <div class="team-card" onclick="showSection('payroll')">
@@ -517,7 +587,7 @@
                                 <div class="metric-label">Ugly</div>
                             </div>
                         </div>
-                        <div class="team-summary">Strong operational excellence with PayrollOptimization completion.</div>
+                        <div class="team-summary">Enhanced employee leave tracking with systematic ticket submission process for better cross-functional visibility and issue resolution.</div>
                     </div>
                 </div>
             </div>
@@ -530,11 +600,11 @@
                     <h2 class="team-title">🚀 Finance Innovation</h2>
                     <div class="header-metrics">
                         <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">2</div>
+                            <div style="font-size: 2.5em; font-weight: bold;">5</div>
                             <div style="font-size: 0.9em;">Good</div>
                         </div>
                         <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 2.5em; font-weight: bold;">2</div>
                             <div style="font-size: 0.9em;">Bad</div>
                         </div>
                         <div class="metric-card">
@@ -547,35 +617,95 @@
                 <div class="section good">
                     <div class="section-title">
                         <span>🌟</span>
-                        <span>THE GOOD (2 Items)</span>
+                        <span>THE GOOD (5 Items)</span>
                     </div>
                     
                     <div class="item-card low-impact">
-                        <div class="item-title">SOC Content Control</div>
-                        <div class="item-details">Implementation and management of SOC content control processes for compliance and security.</div>
+                        <div class="item-title">Completed Expense Receipt Scanning Automation and Survey</div>
+                        <div class="item-details">Now all EE at GoDaddy can scan their receipts right on their phone and submit an expense report in minutes from anywhere.</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Chloe Matthews</div>
+                            <div class="contributors-list">Jennifer Roy</div>
                         </div>
-                        <div class="theme-tag other">Other</div>
+                        <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="entry-date">Entry Date: 10/29/2025</div>
                     </div>
 
                     <div class="item-card medium-impact">
-                        <div class="item-title">2025R2 Uptake</div>
-                        <div class="item-details">Successfully completed major system upgrade and implementation.</div>
+                        <div class="item-title">ZappySys Deprecation Complete</div>
+                        <div class="item-details">Successfully completed the deprecation of ZappySys system, improving system efficiency and reducing technical debt.</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Kate Vu, Andrew Predun, Jen Roy</div>
+                            <div class="contributors-list">Lety Enriquez</div>
                         </div>
                         <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="entry-date">Entry Date: 10/21/2025</div>
+                    </div>
+
+                    <div class="item-card high-impact">
+                        <div class="item-title">QuickSight Migration: 95% Completion</div>
+                        <div class="item-details">All finance dashboards at 95% completion (remainder have tech block).</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Solonia Bass, Kyle Gilbreath, Cameron Althoff</div>
+                        </div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 11/7/2025</div>
+                    </div>
+
+                    <div class="item-card medium-impact">
+                        <div class="item-title">Successful completion of .CO Deferred Revenue zero out at contract completion</div>
+                        <div class="item-details">Completed complex financial reconciliation for contract transition, ensuring accurate revenue recognition.</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Jennifer McConnell, Solonia Bass, Anuj Agarwal</div>
+                        </div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 11/7/2025</div>
+                    </div>
+
+                    <div class="item-card medium-impact">
+                        <div class="item-title">Added .CO Cost Adjustments Run Out to Agg Mart Table</div>
+                        <div class="item-details">Removed .CO PF_IDs in Acquisition table and Removed .CO PF_IDs labeling in DR Mart Table. Enhanced data management and reporting accuracy.</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Lety Enriquez, Michele Dugan</div>
+                        </div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 10/29/2025</div>
                     </div>
                 </div>
 
                 <div class="section bad">
-                    <div class="no-items">
-                        <span style="font-size: 4em;">✅</span>
-                        <h3>No Bad Items!</h3>
-                        <p>Excellent performance with no process issues</p>
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (2 Items)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Payroll Accrual Development Delays</div>
+                        <div class="item-details">The payroll account has seen development with a longer than expected three-week delay due to team members lacking access to sensitive worker's compensation data. Meeting held with Corporate Technology to establish access plan.</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Inadequate planning regarding the required reports</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Kate Vu, Michel Martin</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Key takeaway: When working with HCM data, it is essential to plan in advance because the Finance team does not have access to sensitive worker's compensation data. Schedule follow up meeting to resolve issue in a timely manner</div>
+                        <div class="theme-tag data-dependencies">Data Dependencies</div>
+                        <div class="entry-date">Entry Date: 11/4/2025</div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-title">Banking Requirements Agent Performance Issues</div>
+                        <div class="item-details">Launching Banking Requirements Agent in GoCaaS OI. GoCaaS OI is not returning the best results. Learned limitation to reading the full documents that are over a certain size could result in limited response</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Platform limitation on large documents</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Jennifer Roy</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Continue to Work with GoCaaS on current Bug ticket and teaching and changes the team makes that can help improve this agent in the future</div>
+                        <div class="theme-tag tech-limitations">Tech Limitations</div>
+                        <div class="entry-date">Entry Date: 10/30/2025</div>
                     </div>
                 </div>
 
@@ -586,81 +716,16 @@
                     </div>
                     
                     <div class="item-card">
-                        <div class="item-title">Swift delays continue to block downstream Treasury initiatives</div>
-                        <div class="item-details">Ongoing Swift implementation delays blocking TMS Phase 2, Global Cash Pooling, and Intercompany initiatives, creating cascading risks across Treasury operations.</div>
+                        <div class="item-title">Control 02.02.19 Deficiency - Missed Peer Review</div>
+                        <div class="item-details">Critical Issue: Control 02.02.19 Deficiency - missed peer review on Deferred Revenue reporting</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Owner:</div>
-                            <div class="contributors-list">Kate Vu, Micah Santos, Chloe Matthews</div>
+                            <div class="contributors-list">Sharanya Apte</div>
                         </div>
-                        <div class="item-details"><strong>Action Required:</strong> Align with CorpTech and FinTech architect to support future state architecture.</div>
-                        <div class="theme-tag needs-escalation">Needs Escalation</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Revenue Team Report -->
-        <div id="revenue" class="content-section">
-            <div class="report-content">
-                <div class="team-header">
-                    <h2 class="team-title">💰 Revenue Team</h2>
-                    <div class="header-metrics">
-                        <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
-                            <div style="font-size: 0.9em;">Good</div>
-                        </div>
-                        <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
-                            <div style="font-size: 0.9em;">Bad</div>
-                        </div>
-                        <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
-                            <div style="font-size: 0.9em;">Ugly</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section good">
-                    <div class="section-title">
-                        <span>🎯</span>
-                        <span>THE GOOD (1 Item)</span>
-                    </div>
-                    
-                    <div class="item-card medium-impact">
-                        <div class="item-title">New Product Setup Process Enhancement</div>
-                        <div class="item-details">During the new product setup process, the accounting team is responsible for the encountering and the reconciling, improving efficiency and accuracy.</div>
-                        <div class="contributors-section">
-                            <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Meagan Shaver, Amanda Vigil</div>
-                        </div>
-                        <div class="theme-tag process-improvement">Process Improvement</div>
-                    </div>
-                </div>
-
-                <div class="section bad">
-                    <div class="section-title">
-                        <span>⚠️</span>
-                        <span>THE BAD (1 Item)</span>
-                    </div>
-                    
-                    <div class="item-card">
-                        <div class="item-title">Manual Workday Report Extraction for Indirect Tax</div>
-                        <div class="item-details">The manual process of extracting Workday reports for Indirect Tax creates inefficiencies and potential for errors.</div>
-                        <div class="contributors-section">
-                            <div class="contributors-label">Owner:</div>
-                            <div class="contributors-list">Rania Capsulin, Jennifer Roy</div>
-                        </div>
-                        <div class="item-details"><strong>Root Cause:</strong> Reliance on manual processes; GoCaaS OI not returning optimal results.</div>
-                        <div class="item-details"><strong>Learning:</strong> Continue to pursue automation opportunities and work with GoCaaS on current Tax Integration.</div>
-                        <div class="theme-tag tech-limitations">Tech Limitations</div>
-                    </div>
-                </div>
-
-                <div class="section ugly">
-                    <div class="no-items">
-                        <span style="font-size: 4em;">✅</span>
-                        <h3>No Ugly Items!</h3>
-                        <p>Strong performance with zero critical issues</p>
+                        <div class="item-details"><strong>Immediate Action:</strong> Peer review completed; Jira tickets for PR audit; remediation review with Risk Management</div>
+                        <div class="item-details"><strong>Learning:</strong> Process enhancement</div>
+                        <div class="theme-tag other">Other Business Impact</div>
+                        <div class="entry-date">Entry Date: 11/7/2025</div>
                     </div>
                 </div>
             </div>
@@ -673,69 +738,11 @@
                     <h2 class="team-title">🏛️ Direct Tax</h2>
                     <div class="header-metrics">
                         <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
-                            <div style="font-size: 0.9em;">Good</div>
-                        </div>
-                        <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
-                            <div style="font-size: 0.9em;">Bad</div>
-                        </div>
-                        <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
-                            <div style="font-size: 0.9em;">Ugly</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section good">
-                    <div class="section-title">
-                        <span>🌟</span>
-                        <span>THE GOOD (1 Item)</span>
-                    </div>
-                    
-                    <div class="item-card medium-impact">
-                        <div class="item-title">External Advisor Deliverables Progress</div>
-                        <div class="item-details">Ongoing progress with deliverables from external advisors including Vince Finn Review and new OG ETR. Continued provision of timely feedback to address concerns and process enhancements.</div>
-                        <div class="contributors-section">
-                            <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Samuel Smith, Florance Febriyani, Christina Nordvall</div>
-                        </div>
-                        <div class="item-details"><strong>Enhancement:</strong> Creating tickets for PR audits and reviewing historical accrued errors with PWK Management.</div>
-                        <div class="item-details"><strong>Learning:</strong> Early identification importance recognized for process enhancement.</div>
-                        <div class="theme-tag process-improvement">Process Improvement</div>
-                    </div>
-                </div>
-
-                <div class="section bad">
-                    <div class="no-items">
-                        <span style="font-size: 4em;">✅</span>
-                        <h3>No Bad Items!</h3>
-                        <p>Excellent performance with no process issues</p>
-                    </div>
-                </div>
-
-                <div class="section ugly">
-                    <div class="no-items">
-                        <span style="font-size: 4em;">✅</span>
-                        <h3>No Ugly Items!</h3>
-                        <p>Outstanding performance with zero critical issues</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Accounts Payable Report -->
-        <div id="accounts-payable" class="content-section">
-            <div class="report-content">
-                <div class="team-header">
-                    <h2 class="team-title">💳 Accounts Payable</h2>
-                    <div class="header-metrics">
-                        <div class="metric-card">
                             <div style="font-size: 2.5em; font-weight: bold;">2</div>
                             <div style="font-size: 0.9em;">Good</div>
                         </div>
                         <div class="metric-card">
-                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
                             <div style="font-size: 0.9em;">Bad</div>
                         </div>
                         <div class="metric-card">
@@ -752,31 +759,45 @@
                     </div>
                     
                     <div class="item-card medium-impact">
-                        <div class="item-title">Navan Global Travel Management System Launch</div>
-                        <div class="item-details">Successful full launch of Navan, our new global travel management system. Achieved significant employee time savings and improved supplier experience with reduced processing time requirements.</div>
+                        <div class="item-title">2024 US Federal Income Tax Returns Filing</div>
+                        <div class="item-details">The tax team successfully finalized and filed the 2024 US federal income tax returns with the IRS. This achievement was the result of a collaborative effort starting from the Q4 tax provision and culminating in the determination of our final taxable income. Additionally, these returns incorporated the finalized impacts of the Project Storm restructure effective January 1, 2024.</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Natalie Algur-Hedderson, Michel Barrocas</div>
+                            <div class="contributors-list">Steve Monthofer, Matthew Hammelev, Sam Smith</div>
                         </div>
-                        <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 10/22/2025</div>
                     </div>
 
-                    <div class="item-card high-impact">
-                        <div class="item-title">SOC Development Sign-off</div>
-                        <div class="item-details">Successfully completed SOC development requirements with official sign-off approval, ensuring compliance and security standards.</div>
+                    <div class="item-card medium-impact">
+                        <div class="item-title">IRS Examination Team Presentation</div>
+                        <div class="item-details">In response to a request from the IRS examination team, the Tax department delivered a comprehensive presentation outlining the company's significant intercompany transactions and their associated tax implications.</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Jennifer Roy</div>
+                            <div class="contributors-list">Steve Monthofer, David Valenzuela, Jennifer Decker</div>
                         </div>
-                        <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 10/23/2025</div>
                     </div>
                 </div>
 
                 <div class="section bad">
-                    <div class="no-items">
-                        <span style="font-size: 4em;">✅</span>
-                        <h3>No Bad Items!</h3>
-                        <p>Excellent performance with no process issues</p>
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">SBC Calculation Error - Section 162(m)</div>
+                        <div class="item-details">During the preparation of the Company's 2024 tax return, an error in SBC deduction calculation under Section 162(m) resulted in $11.9m overstatement</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Double application of Section 162(m) limitation</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Samuel Smith, Christina Nordvall</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Management conducted a root cause analysis. We learned that incorporating more detailed diagnostics in the workbook design will help identify such errors earlier in the process.</div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 10/23/2025</div>
                     </div>
                 </div>
 
@@ -784,7 +805,343 @@
                     <div class="no-items">
                         <span style="font-size: 4em;">✅</span>
                         <h3>No Ugly Items!</h3>
-                        <p>Outstanding performance with zero critical issues</p>
+                        <p>No critical issues for October 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indirect Tax Report -->
+        <div id="indirect-tax" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">🌐 Indirect Tax</h2>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">2</div>
+                            <div style="font-size: 0.9em;">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (2 Items)</span>
+                    </div>
+                    
+                    <div class="item-card high-impact">
+                        <div class="item-title">DGI Platform Transition Complete</div>
+                        <div class="item-details">Successfully completed the transition to the DGI platform for Indirect Tax compliance, enabling enhanced reporting capabilities, streamlined approval processes, and improved document archiving and retrieval.</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Froy Leon, Ninfa Cepeda, KPMG</div>
+                        </div>
+                        <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="entry-date">Entry Date: 11/12/2025</div>
+                    </div>
+
+                    <div class="item-card medium-impact">
+                        <div class="item-title">Vertex Tax Link Migration Phase 1</div>
+                        <div class="item-details">Completed 1st Phase of Vertex Tax Link Migration for Companies on Vertex on the Customer Side</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Jennifer Roy, Froy Leon</div>
+                        </div>
+                        <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="entry-date">Entry Date: 10/30/2025</div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Manual Workday Report Extraction Inefficiencies</div>
+                        <div class="item-details">The manual process of extracting Workday reports for Indirect Tax creates efficiency challenges, affecting 100+ monthly reconciliations</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Reliance on manual processes</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Ninfa Cepeda, Jennifer Roy</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> We will continue to pursue opportunities for automation and explore Workday bursting capabilities</div>
+                        <div class="theme-tag tech-limitations">Tech Limitations</div>
+                        <div class="entry-date">Entry Date: 11/12/2025</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3>No Ugly Items!</h3>
+                        <p>No critical issues for October 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Close to Report -->
+        <div id="close-to-report" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">📈 Close to Report</h2>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card medium-impact">
+                        <div class="item-title">CO Contract Transition and GL Mapping Migration</div>
+                        <div class="item-details">Successfully completed the migration of .CO PFIDs and associated GL mappings following the .CO contract transition in early October, shifting from intercompany to third-party arrangements.</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Michele Dugan, Brett Pederson, DeAnn Jiles, Brad Jansma</div>
+                        </div>
+                        <div class="theme-tag other">Other</div>
+                        <div class="entry-date">Entry Date: 10/20/2025</div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">📋</span>
+                        <h3>No Bad Items</h3>
+                        <p>No Bad items recorded for October 2025</p>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="section-title">
+                        <span>🚨</span>
+                        <span>THE UGLY (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Statutory Audit Delays</div>
+                        <div class="item-details">Critical Issue: Statutory audit incomplete due to unresolved indirect tax treatment</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Froy Leon, Katy Kendall, David Woolf</div>
+                        </div>
+                        <div class="item-details"><strong>Immediate Action:</strong> Coordinate with KPMG to breakout liabilities and P&L by entity</div>
+                        <div class="item-details"><strong>Learning:</strong> Tax sharing agreements outdated; indirect tax impacts not assessed at statutory level</div>
+                        <div class="theme-tag">Immediate Action Required</div>
+                        <div class="entry-date">Entry Date: 10/20/2025</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accounts Payable Report -->
+        <div id="accounts-payable" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">💳 Accounts Payable</h2>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">📋</span>
+                        <h3>No Good Items</h3>
+                        <p>No Good items recorded for October 2025</p>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">Care Vendor Management SOP Sign-off Delays</div>
+                        <div class="item-details">Bandwidth and resource conflicts with Care vendor management team preventing SOP sign off. Launch is now in Nov not Oct.</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Bandwidth and resource conflicts with Care vendor management team</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Jennifer Roy</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Emphasize the importance of proactive conflict resolution by prioritizing vendor management attendance from teams</div>
+                        <div class="theme-tag resourcing">Resourcing</div>
+                        <div class="entry-date">Entry Date: 10/29/2025</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3>No Ugly Items!</h3>
+                        <p>No critical issues for October 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Report -->
+        <div id="revenue" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">💰 Revenue</h2>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">📋</span>
+                        <h3>No Good Items</h3>
+                        <p>No Good items recorded for October 2025</p>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">TrustedSite FSLI Classification Challenges</div>
+                        <div class="item-details">During the new product setup process, the accounting team faced cross-reference challenges in TrustedSite FSLI classification requiring multiple iterations</div>
+                        <div class="item-details"><strong>Root Cause:</strong> The absence of cross-functional alignment and requirement for manual processing in a timely manner</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Meagan Shaver, Amanda Vigil, Elena Elskens</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> Going forward, Monday product calls will include FSLI discussions to ensure proper classification alignment</div>
+                        <div class="theme-tag other">Process Clarity</div>
+                        <div class="entry-date">Entry Date: 11/5/2025</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3>No Ugly Items!</h3>
+                        <p>No critical issues for October 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Finance Report -->
+        <div id="strategic-finance" class="content-section">
+            <div class="report-content">
+                <div class="team-header">
+                    <h2 class="team-title">📊 Strategic Finance</h2>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Good</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">1</div>
+                            <div style="font-size: 0.9em;">Bad</div>
+                        </div>
+                        <div class="metric-card">
+                            <div style="font-size: 2.5em; font-weight: bold;">0</div>
+                            <div style="font-size: 0.9em;">Ugly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section good">
+                    <div class="section-title">
+                        <span>🌟</span>
+                        <span>THE GOOD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card medium-impact">
+                        <div class="item-title">App Store Customer Inclusion Success</div>
+                        <div class="item-details">App Store Customer Inclusion: Successfully implemented accurate active customer counts across Studio and Conversation Apps by strategically aligning cross-functional teams (Ecomm, FDM, Finance, Conversations/Studio). Executed upstream data-pipeline corrections, established effective short-term guardrails for active customer counting, and developed comprehensive process documentation. Achieved an increase of 14,000 active customers in September and 34,000 in October.</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Contributors:</div>
+                            <div class="contributors-list">Scott Mertens, April Yan, Sandeep Garg, and Dinesh Sharma</div>
+                        </div>
+                        <div class="theme-tag showcase">Showcase</div>
+                        <div class="entry-date">Entry Date: 11/18/2025</div>
+                    </div>
+                </div>
+
+                <div class="section bad">
+                    <div class="section-title">
+                        <span>⚠️</span>
+                        <span>THE BAD (1 Item)</span>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="item-title">QuickSight Migration Folder Structure Challenges</div>
+                        <div class="item-details">The restricted folder system was implemented for the QuickSight migration caused lots of challenges in maintaining our analyses and dashboards.</div>
+                        <div class="item-details"><strong>Root Cause:</strong> Lack of understanding of the system</div>
+                        <div class="contributors-section">
+                            <div class="contributors-label">Owner:</div>
+                            <div class="contributors-list">Kyle Gilbreath</div>
+                        </div>
+                        <div class="item-details"><strong>Learning:</strong> We have since worked with the QS admins to develop a new folder structure that gives us more flexibility but still allows us to restrict access to the appropriate individuals and teams. The next step is getting the user's datasets and reports moved over to the new folders.</div>
+                        <div class="theme-tag other">Process Clarity</div>
+                        <div class="entry-date">Entry Date: 11/18/2025</div>
+                    </div>
+                </div>
+
+                <div class="section ugly">
+                    <div class="no-items">
+                        <span style="font-size: 4em;">✅</span>
+                        <h3>No Ugly Items!</h3>
+                        <p>No critical issues for October 2025</p>
                     </div>
                 </div>
             </div>
@@ -818,13 +1175,14 @@
                     </div>
                     
                     <div class="item-card medium-impact">
-                        <div class="item-title">PayrollOptimization Completion</div>
-                        <div class="item-details">Successfully completed PayrollOptimization initiative with enhanced system capabilities and operational improvements delivering increased efficiency.</div>
+                        <div class="item-title">Employee Leave Tracking Enhancement</div>
+                        <div class="item-details">Implemented a ticket submission process enabling the Leaves team to systematically track all employee leave scenarios involving payment inquiries, recalculations, or corrections based on upstream approval requirements. This initiative enhances cross-functional visibility and proactively addresses potential challenges in future leave input submissions.</div>
                         <div class="contributors-section">
                             <div class="contributors-label">Contributors:</div>
-                            <div class="contributors-list">Jennifer Roy</div>
+                            <div class="contributors-list">Maria Bonar</div>
                         </div>
                         <div class="theme-tag process-improvement">Process Improvement</div>
+                        <div class="entry-date">Entry Date: 11/12/2025</div>
                     </div>
                 </div>
 
